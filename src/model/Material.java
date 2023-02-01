@@ -1,6 +1,8 @@
+package model;
+
 import java.time.LocalDate;
 
-abstract class Material {
+public abstract class Material implements Discount {
     private String id;
     private String name;
     private LocalDate manufacturingDate;
@@ -45,6 +47,16 @@ abstract class Material {
         this.cost = cost;
     }
 
-    abstract double getAmount();
+    public abstract double getAmount();
     abstract LocalDate getExpiryDate();
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", manufacturingDate=" + manufacturingDate +
+                ", cost=" + cost +
+                '}';
+    }
 }

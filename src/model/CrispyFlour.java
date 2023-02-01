@@ -1,14 +1,22 @@
+package model;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class CrispyFlour extends Material implements Discount {
+public class CrispyFlour extends Material{
     private int quantity;
-    private LocalDate expiryDate;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public CrispyFlour(String id, String name, LocalDate manufacturingDate, int cost, int quantity) {
         super(id, name, manufacturingDate, cost);
         this.quantity = quantity;
-        this.expiryDate = manufacturingDate.plusYears(1);
     }
 
     @Override
@@ -18,13 +26,13 @@ public class CrispyFlour extends Material implements Discount {
 
     @Override
     public LocalDate getExpiryDate() {
-        return expiryDate;
+        return getManufacturingDate().plusYears(1);
     }
 
     @Override
     public double getRealMoney() {
         LocalDate now = LocalDate.now();
-        int monthsUntilExpiry = (int) ChronoUnit.MONTHS.between(now, expiryDate);
+        int monthsUntilExpiry = (int) ChronoUnit.MONTHS.between(now, getExpiryDate());
         if (monthsUntilExpiry <= 2) {
             return getAmount() * 0.6;
         } else if (monthsUntilExpiry <= 4) {
@@ -32,5 +40,12 @@ public class CrispyFlour extends Material implements Discount {
         } else {
             return getAmount() * 0.95;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CrispyFlour{" +
+                "quantity=" + quantity +
+                "} " + super.toString();
     }
 }
